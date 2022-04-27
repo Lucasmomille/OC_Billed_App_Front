@@ -21,17 +21,21 @@ export default class NewBill {
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length-1]
     const fileType = file.type
-    console.log('handle', fileType)
-    if (fileType !== ('image/png' || 'image/jpg' || 'image/jpeg')) {
-      console.log('not ok')
+    const errorMessage = document.getElementById('MessageFile')
+
+    if (fileType === 'image/png' || fileType === 'image/jpg' || fileType === 'image/jpeg') {
+      if (!errorMessage.classList.contains('message-error')) {
+        errorMessage.classList.add('message-error')
+      }
     } else {
-      console.log('ok')
+      errorMessage.classList.remove('message-error')
+      return false
     }
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
     formData.append('email', email)
-
+    console.log('pass');
     this.store
       .bills()
       .create({
@@ -40,10 +44,10 @@ export default class NewBill {
           noContentType: true
         }
       })
-      .then(({fileUrl, key}) => {
-        console.log(fileUrl)
-        this.billId = key
-        this.fileUrl = fileUrl
+      .then((bill) => {
+        console.log(bill)
+        this.billId = bill.key
+        this.fileUrl = bill.filePath
         this.fileName = fileName
       }).catch(error => console.error(error))
   }
