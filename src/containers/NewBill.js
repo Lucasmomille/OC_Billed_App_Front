@@ -22,7 +22,6 @@ export default class NewBill {
     const fileName = filePath[filePath.length-1]
     const fileType = file.type
     const errorMessage = document.getElementById('MessageFile')
-
     if (fileType === 'image/png' || fileType === 'image/jpg' || fileType === 'image/jpeg') {
       if (!errorMessage.classList.contains('message-error')) {
         errorMessage.classList.add('message-error')
