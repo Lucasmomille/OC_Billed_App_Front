@@ -55,7 +55,7 @@ describe("Given I am connected as an employee", async() => {
       const newInputFile = screen.getByTestId('file');
 
       user.upload(newInputFile, newFile);
-
+      console.log("NEWBILL", document.body)
       // await waitFor(() => screen.getByTestId('error-file'))
       const error = screen.getByTestId('error-file')
       expect(error).not.toBeTruthy()
