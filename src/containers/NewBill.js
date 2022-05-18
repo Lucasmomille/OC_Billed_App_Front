@@ -23,11 +23,11 @@ export default class NewBill {
     const fileType = file.type
     const errorMessage = document.getElementById('MessageFile')
     if (fileType === 'image/png' || fileType === 'image/jpg' || fileType === 'image/jpeg') {
-      if (!errorMessage.classList.contains('message-error')) {
-        errorMessage.classList.add('message-error')
+      if (!errorMessage.classList.contains('message-ok')) {
+        errorMessage.classList.add('message-ok')
       }
     } else {
-      errorMessage.classList.remove('message-error')
+      errorMessage.classList.remove('message-ok')
       return false
     }
     const formData = new FormData()

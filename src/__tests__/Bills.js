@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 
+import mockStore from "../__mocks__/store"
 import {screen, waitFor} from "@testing-library/dom"
 import BillsUI from "../views/BillsUI.js"
 import { bills } from "../fixtures/bills.js"
@@ -9,9 +10,9 @@ import { ROUTES, ROUTES_PATH} from "../constants/routes.js";
 import {localStorageMock} from "../__mocks__/localStorage.js";
 import Bills from '../containers/Bills'
 import userEvent from '@testing-library/user-event'
-import mockStore from "../__mocks__/store"
 import router from "../app/Router.js";
 
+jest.mock("../app/store", () => mockStore)
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
     const onNavigate = (pathname) => {
