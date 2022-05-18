@@ -75,11 +75,6 @@ describe("Given I am connected as an employee", () => {
       const formNewBill = screen.getByTestId('form-new-bill')
       expect(formNewBill).toBeTruthy()
     })
-    /* test("Then redirect to page new bill", () => {
-    }) */
-    /* test("get bill", () => {
-      await waitFor(() => screen.getByTestId('btn-new-bill'))
-    }) */
   })
 })
 
