@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { screen, waitFor, fireEvent } from "@testing-library/dom"
+import { screen, waitFor } from "@testing-library/dom"
 import NewBillUI from "../views/NewBillUI.js"
 import NewBill from "../containers/NewBill.js"
 import { ROUTES, ROUTES_PATH} from "../constants/routes.js";
@@ -45,7 +45,7 @@ describe("Given I am connected as an employee", async() => {
   describe("When I handle a file", () => {
     test("Then the extension is wrong", async () => {
       
-      const newbillContainer = new NewBill({document, onNavigate, store: null, localStorage: window.localStorage })
+      const newbillContainer = new NewBill({document, onNavigate, store: mockStore, localStorage: window.localStorage })
       const testHandleFile = jest.fn((e) => newbillContainer.handleChangeFile(e))
       const inputFile = screen.getByTestId('file');
       const file = new File(['blob'], 'blob.pdf', {
@@ -61,28 +61,28 @@ describe("Given I am connected as an employee", async() => {
 
       await waitFor(() => screen.getByTestId('error-file'))
       const error = screen.getByTestId('error-file')
-      console.log('error message', document.body)
       expect(!error.classList.contains('message-ok')).toBe(true)
-/* 
-      const newFile = new File(['image'], 'test.png', {
-        type: 'image/png',
-      });
-      user.upload(inputFile, newFile); */
+
     });
     test('Then the extension is ok', () => {
-      /* const newbillContainer = new NewBill({document, onNavigate, store: null, localStorage: window.localStorage })
+      const newbillContainer = new NewBill({document, onNavigate, store: mockStore, localStorage: window.localStorage })
       const testHandleFile = jest.fn((e) => newbillContainer.handleChangeFile(e))
       const newInputFile = screen.getByTestId('file');
+
+      const wrongFile = new File(['blob'], 'blob.pdf', {
+        type: 'application/pdf',
+      });
       const newFile = new File(['image'], 'test.png', {
         type: 'image/png',
       });
       newInputFile.addEventListener("change", testHandleFile)
+      user.upload(newInputFile, wrongFile);
       user.upload(newInputFile, newFile);
       const newError = screen.getByTestId('error-file')
-      expect(newError.classList.contains('message-ok')).toBe(true) */
+      expect(newError.classList.contains('message-ok')).toBe(true)
     });
     test("Then I fill the rest of the form", async () => {
-      const newbillContainer = new NewBill({document, onNavigate, store: null, localStorage: window.localStorage })
+      const newbillContainer = new NewBill({document, onNavigate, store: mockStore, localStorage: window.localStorage })
 
       const formName = screen.getByTestId('expense-name');
       const formDate = screen.getByTestId('datepicker');
@@ -106,22 +106,9 @@ describe("Given I am connected as an employee", async() => {
       form.addEventListener('submit', testHandleSubmit)
       userEvent.click(formBtn);
       expect(testHandleSubmit).toHaveBeenCalled()
-      /* 
-      form-new-bill
-      "commentary"
-      button type="submit" id='btn-send-bill'
-      */
+      await waitFor(() => screen.getByText('Mes notes de frais'))
+      const pageBill = screen.getByText('Mes notes de frais')
+      expect(pageBill).toBeTruthy()
     })
   })
 })
-
-// When I handle a file
-  // Then the extension is wrong
-  // Then the file is ok
-    // Bill is create
-// When I submit the form
-  // Then
-
-  // Then bill mockstore update
-
-//When I click on logout
